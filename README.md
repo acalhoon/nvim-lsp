@@ -212,6 +212,22 @@ nvim_lsp.SERVER.setup{config}
     If the parameter is set to nil, or an empty table is returned,
     the {cmd} parameter is left unmodified.
 
+    Example: When running a [clangd](#clangd) language server, this function can
+    be useful to provide the location of the `compile_commands.json` using the
+    `--compile-commands-dir` argument, especially when the file is located in a
+    shared build location.
+
+    ~~~{lua}
+      gen_cmdline_args = function(fname)
+        local root_path = util.root_pattern("CMakeLists.txt")(fname)
+        local build_path = string.gsub(root_path, "src", "build")
+
+        local args = {}
+        table.insert(args, ('--compile-commands-dir=%s'):format(build_path)
+        return args
+      end;
+    ~~~
+
   {name}
     Defaults to the server's name.
 
