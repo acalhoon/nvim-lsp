@@ -172,6 +172,11 @@ nvim_lsp.SERVER.setup{config}
   The `config` parameter has the same shape as that of
   |vim.lsp.start_client()|, with these additions and changes:
 
+  {cmd}
+    Required for all servers.
+    Table containing the server daemon executable name as the first element and
+    optional additional commandline arguments as subsequent elements.
+
   {root_dir}
     Required for some servers, optional for others.
     Function of the form `function(filename, bufnr)`.
@@ -194,6 +199,18 @@ nvim_lsp.SERVER.setup{config}
       - |nvim_lsp.util.find_git_root()|
       - |nvim_lsp.util.find_node_modules_root()|
       - |nvim_lsp.util.find_package_json_root()|
+
+  {gen_cmdline_args}
+    Optional for all servers.
+    Function of the form `function(filename, bufnr)`.
+    Called on new candidate buffers being attached-to.
+    Returns a table of strings that augment the commandline arguments in {cmd}.
+
+    If a non-empty table is returned, the element values are appended, in order,
+    to the {cmd} parameter before launching the server daemon.
+
+    If the parameter is set to nil, or an empty table is returned,
+    the {cmd} parameter is left unmodified.
 
   {name}
     Defaults to the server's name.
