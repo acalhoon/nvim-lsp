@@ -217,16 +217,14 @@ nvim_lsp.SERVER.setup{config}
     `--compile-commands-dir` argument, especially when the file is located in a
     shared build location.
 
-    ~~~{lua}
-      gen_cmdline_args = function(fname)
+    gen_cmdline_args = function(fname)
         local root_path = util.root_pattern("CMakeLists.txt")(fname)
         local build_path = string.gsub(root_path, "src", "build")
 
         local args = {}
         table.insert(args, ('--compile-commands-dir=%s'):format(build_path)
         return args
-      end;
-    ~~~
+    end;
 
   {name}
     Defaults to the server's name.
